@@ -18,5 +18,10 @@ namespace Elsa.Activities.AzureServiceBus
         public static ISetupActivity<SendAzureServiceBusTopicMessage> WithMessage(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, Func<ActivityExecutionContext, object> value) => activity.Set(x => x.Message, value!);
         public static ISetupActivity<SendAzureServiceBusTopicMessage> WithMessage(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, Func<object> value) => activity.Set(x => x.Message, value!);
         public static ISetupActivity<SendAzureServiceBusTopicMessage> WithMessage(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, object value) => activity.Set(x => x.Message, value!);
+
+        public static ISetupActivity<SendAzureServiceBusTopicMessage> WithFireAndForget(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, Func<ActivityExecutionContext, ValueTask<bool>> value) => activity.Set(x => x.FireAndForget, value!);
+        public static ISetupActivity<SendAzureServiceBusTopicMessage> WithFireAndForget(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, Func<ActivityExecutionContext, bool> value) => activity.Set(x => x.FireAndForget, value!);
+        public static ISetupActivity<SendAzureServiceBusTopicMessage> WithFireAndForget(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, Func<bool> value) => activity.Set(x => x.FireAndForget, value!);
+        public static ISetupActivity<SendAzureServiceBusTopicMessage> WithFireAndForget(this ISetupActivity<SendAzureServiceBusTopicMessage> activity, bool value) => activity.Set(x => x.FireAndForget, value!);
     }
 }

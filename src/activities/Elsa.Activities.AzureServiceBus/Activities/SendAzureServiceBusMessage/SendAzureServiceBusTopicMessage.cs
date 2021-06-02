@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Elsa.Activities.AzureServiceBus.Results;
 using Elsa.Activities.AzureServiceBus.Services;
 using Elsa.ActivityResults;
 using Elsa.Attributes;
@@ -22,6 +23,7 @@ namespace Elsa.Activities.AzureServiceBus
 
         [ActivityInput] public string TopicName { get; set; } = default!;
         [ActivityInput] public object Message { get; set; } = default!;
+        [ActivityInput] public bool FireAndForget { get; set; } = true;
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
@@ -32,6 +34,11 @@ namespace Elsa.Activities.AzureServiceBus
             if (!string.IsNullOrWhiteSpace(context.WorkflowExecutionContext.CorrelationId))
                 message.CorrelationId = context.WorkflowExecutionContext.CorrelationId;
 
+            await sender.SendAsync(message);
+
+            if (!FireAndForget)
+                return Combine(Done(), new ServiceBusActionResult(sender, message));
+            
             await sender.SendAsync(message);
             return Done();
         }
