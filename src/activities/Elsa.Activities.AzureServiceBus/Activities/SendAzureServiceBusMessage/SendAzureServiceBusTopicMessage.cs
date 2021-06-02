@@ -36,8 +36,6 @@ namespace Elsa.Activities.AzureServiceBus
             if (!string.IsNullOrWhiteSpace(context.WorkflowExecutionContext.CorrelationId))
                 message.CorrelationId = context.WorkflowExecutionContext.CorrelationId;
 
-            await sender.SendAsync(message);
-
             if (!FireAndForget)
                 return Combine(Done(), new ServiceBusActionResult(sender, message));
             
