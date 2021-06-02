@@ -23,7 +23,9 @@ namespace Elsa.Activities.AzureServiceBus
 
         [ActivityInput] public string TopicName { get; set; } = default!;
         [ActivityInput] public object Message { get; set; } = default!;
-        [ActivityInput] public bool FireAndForget { get; set; } = true;
+        
+        [ActivityInput(DefaultValue = true, Hint = "Allow the activity to send immediatly the message if true or wait for the first suspend. Usefull for RequestResponse pattern using Topic Message Received " )] 
+        public bool FireAndForget { get; set; } = true;
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
         {
