@@ -3,6 +3,7 @@ using Elsa.Activities.AzureServiceBus.Results;
 using Elsa.Activities.AzureServiceBus.Services;
 using Elsa.ActivityResults;
 using Elsa.Attributes;
+using Elsa.Design;
 using Elsa.Serialization;
 using Elsa.Services;
 using Elsa.Services.Models;
@@ -24,7 +25,9 @@ namespace Elsa.Activities.AzureServiceBus
         [ActivityInput] public string TopicName { get; set; } = default!;
         [ActivityInput] public object Message { get; set; } = default!;
         
-        [ActivityInput(DefaultValue = true, Hint = "Allow the activity to send immediatly the message if true or wait for the first suspend. Usefull for RequestResponse pattern using Topic Message Received " )] 
+        [ActivityInput(DefaultValue = true
+            ,Hint = "Allow the activity to send immediatly the message if true or wait for the first suspend. Usefull for RequestResponse pattern using Topic Message Received "
+            ,Category = PropertyCategories.Advanced)] 
         public bool FireAndForget { get; set; } = true;
 
         protected override async ValueTask<IActivityExecutionResult> OnExecuteAsync(ActivityExecutionContext context)
